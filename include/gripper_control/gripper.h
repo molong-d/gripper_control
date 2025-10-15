@@ -32,6 +32,8 @@
 #define REG_TARGET_POS_INFO_H 0x041C // 目标位置信息high
 #define REG_TARGET_POS_INFO_L 0x041D // 目标位置信息low
 
+
+
 // -------------------------- 原有寄存器（保留） --------------------------
 // 目标寄存器（根据新协议）
 #define REG_ENABLE         0x0100
@@ -49,6 +51,7 @@
 #define REG_ALARM_B        0x0403
 #define REG_ACTUAL_POS_H   0x0414
 #define REG_ACTUAL_POS_L   0x0415
+
 
 class Gripper {
 public:
@@ -118,6 +121,8 @@ public:
     uint16_t read_alarm_status_b();
     std::string parse_alarm_status(uint16_t alarm_code_a, uint16_t alarm_code_b);
     
+
+
 private:
     // 内部寄存器读写（保留+扩展）
     void write_register(uint16_t addr, uint16_t value);

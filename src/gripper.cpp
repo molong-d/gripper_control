@@ -314,3 +314,4 @@ uint16_t Gripper::read_register(uint16_t addr, bool &ok) {
     ok = (ret == 1);
     return data;
 }
+
