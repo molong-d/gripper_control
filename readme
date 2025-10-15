@@ -1,0 +1,31 @@
+ls -l /dev/ttyUSB* /dev/ttyACM*
+cd ~/gripper_control_ws
+colcon build --packages-select gripper_control
+source install/setup.bash
+ros2 run gripper_control gripper_action_server
+
+
+
+
+ros2 action send_goal /gripper_control gripper_control/action/GripperControl   "{target_position: 5.0, target_velocity: 50.0, target_torque: 100.0, target_acceleration: 10.0, target_deceleration: 100.0, force_threshold: 10.0}"
+
+
+source install/setup.bash
+
+ros2 action send_goal /gripper_control gripper_control/action/GripperControl   "{
+target_position: 5.0, 
+target_velocity: 50.0, 
+target_torque: 100.0, 
+target_acceleration: 10.0, 
+target_deceleration: 100.0, 
+force_threshold: 5.0}"
+
+source install/setup.bash
+
+ros2 action send_goal /gripper_control gripper_control/action/GripperControl   "{
+target_position: 80.0, 
+target_velocity: 50.0, 
+target_torque: 100.0, 
+target_acceleration: 10.0, 
+target_deceleration: 100.0, 
+force_threshold: 5.0}"

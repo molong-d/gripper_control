@@ -1,0 +1,35 @@
+# 目标参数
+float64 target_position    # 期望位置(mm，0~最大行程)
+float64 target_velocity    # 期望速度(%)
+float64 target_torque      # 期望力矩(%)
+float64 target_acceleration# 期望加速度(%)
+float64 target_deceleration# 期望减速度(%)
+float64 force_threshold    # 接触力阈值(N)
+---
+# 结果
+bool position_reached      # 位置到达状态
+bool torque_reached        # 力矩到达状态
+bool velocity_reached      # 速度到达状态
+float64 final_position     # 最终位置(mm)
+string status_msg          # 状态描述
+---
+# 反馈（50Hz周期发布）
+float64 current_position   # 当前位置(mm)
+bool connection_status     # 夹爪连接状态(true=正常)
+
+# 新增：协议扩展字段
+uint8 position_cmd_type   # 位置指令类型
+string motor_dir          # 电机方向
+uint16 actual_speed       # 实时转速(rpm)
+uint16 actual_current     # 实时电流(mA)
+bool zero_vel_reached     # 零速到达状态
+
+
+# 传感器1数据
+float64 sensor1_fx         # X方向合力(N)
+float64 sensor1_fy         # Y方向合力(N)
+float64 sensor1_fz         # Z方向合力(N)
+# 传感器2数据
+float64 sensor2_fx         # X方向合力(N)
+float64 sensor2_fy         # Y方向合力(N)
+float64 sensor2_fz         # Z方向合力(N)
