@@ -92,6 +92,7 @@ public:
             return;
         }
 
+
         // 创建动作服务器
         action_server_ = rclcpp_action::create_server<GripperControl>(
             this, "/gripper_control",
@@ -209,15 +210,11 @@ private:
                 }
             }
 
-        
-
-
-
             // 读取当前位置
             float current_pos = gripper_->read_actual_position();
             feedback->current_position = current_pos;
 
-
+            
             // ---------------------- 新增代码开始 ----------------------
             // 实时打印手爪位置（50Hz频率，与循环同步）
             if (current_pos < 0.0f) { // 判定读取失败（read_actual_position()失败返回-1.0f）
@@ -228,6 +225,35 @@ private:
             }
             // ---------------------- 新增代码结束 ----------------------
 
+
+            // 在读取当前位置并打印之后添加：
+            // ---------------------- 新增：实时输出电流值 ----------------------
+            bool current_ok;
+            uint16_t current_mA = gripper_->read_actual_current(current_ok);
+            if (current_ok) {
+                // 电流单位为mA，保留1位小数显示
+                RCLCPP_INFO(get_logger(), "手爪实时电流：%.1f mA", static_cast<float>(current_mA));
+            } else {
+                RCLCPP_WARN(get_logger(), "手爪电流读取失败（Modbus寄存器访问错误）");
+            }
+            // ---------------------- 新增结束 ----------------------
+
+
+            
+
+            // 在读取当前位置并打印之后添加：
+            // ---------------------- 新增：实时输出转速值 ----------------------
+            bool current_vok;
+            uint16_t current_v= gripper_->read_actual_speed(current_vok);
+            if (current_vok) {
+                // 电流单位为mA，保留1位小数显示
+                RCLCPP_INFO(get_logger(), "手爪实时转速：%.1f rap", static_cast<float>(current_v));
+            } else {
+                RCLCPP_WARN(get_logger(), "手爪转速读取失败（Modbus寄存器访问错误）");
+            }
+            // ---------------------- 新增结束 ----------------------
+
+            
 
 
             // 如果有传感器，写入反馈
